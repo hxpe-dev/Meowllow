@@ -1,4 +1,5 @@
 docs/_site/
 docs/.bundle/
+docs/.ruby-version
 .DS_Store
 *.swp
