@@ -1,0 +1,65 @@
+purr:
+  bg:
+    crust:   "#201E27"
+    mantle:  "#24212B"
+    base:    "#2B2833"
+    surface0: "#4A4557"
+    surface1: "#5C586A"
+    surface2: "#6E687D"
+  text:
+    main:    "#E6E0E9"
+    sub0:    "#D9D4DE"
+    sub1:    "#9B96A8"
+    overlay0: "#6E687D"
+  accents:
+    peach:   "#F2B8B2"
+    mint:    "#A9DDBB"
+    cream:   "#F8EAA3"
+    peri:    "#B4C5ED"
+    pink:    "#F5C2E7"
+    lilac:   "#C7B0F0"
+    aqua:    "#A1E3E1"
+
+slumber:
+  bg:
+    crust:   "#1F1D25"
+    mantle:  "#242128"
+    base:    "#2a272e"
+    surface0: "#4a4553"
+    surface1: "#575268"
+    surface2: "#6e6a86"
+  text:
+    main:    "#fdeadc"
+    sub0:    "#d8d0c8"
+    sub1:    "#9893AE"
+    overlay0: "#6e6a86"
+  accents:
+    peach:   "#ee99a0"
+    mint:    "#a6d1a1"
+    cream:   "#f9e2af"
+    peri:    "#9fbce8"
+    pink:    "#f5bde6"
+    lilac:   "#c7b0f0"
+    aqua:    "#a8e0d3"
+
+sunbeam:
+  bg:
+    crust:   "#F8F4F0"
+    mantle:  "#F9F6F2"
+    base:    "#FDFBF8"
+    surface0: "#F2ECE4"
+    surface1: "#E8E1DA"
+    surface2: "#DFD8CF"
+  text:
+    main:    "#4C4843"
+    sub0:    "#7C766F"
+    sub1:    "#9C968E"
+    overlay0: "#B0A9A3"
+  accents:
+    peach:   "#E88E86"
+    mint:    "#81B580"
+    cream:   "#E6B450"
+    peri:    "#7E9CD6"
+    pink:    "#E59BCF"
+    lilac:   "#AB91E4"
+    aqua:    "#7ECBC4"
