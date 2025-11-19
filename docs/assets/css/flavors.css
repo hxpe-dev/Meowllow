@@ -7,37 +7,49 @@ html[data-theme="purr"] {
   --bg-surface0: #4A4557;
   --bg-surface1: #5C586A;
   --bg-surface2: #6E687D;
-  --text-main: #E6E0E9;
+  --text-main: #ECE7EE;
   --text-sub0: #D9D4DE;
-  --text-sub1: #9B96A8;
-  --text-overlay0: #6E687D;
+  --text-sub1: #B7B0C0;
+  --text-overlay0: #7A7485;
   --accents-peach: #F2B8B2;
-  --accents-mint: #A9DDBB;
+  --accents-mint: #8FCFA0;
   --accents-cream: #F8EAA3;
   --accents-peri: #B4C5ED;
   --accents-pink: #F5C2E7;
-  --accents-lilac: #C7B0F0;
-  --accents-aqua: #A1E3E1;
+  --accents-lilac: #BFA8F6;
+  --accents-aqua: #8EE8E4;
+  --ui-error: #F26D6D;
+  --ui-warning: #E6B85A;
+  --ui-info: #6EA6F6;
+  --ui-hint: #A9DDBB;
+  --ui-muted: #3B3740;
+  --ui-accentBright: #CDE8F2;
 }
 
 html[data-theme="slumber"] {
   --bg-crust: #1F1D25;
   --bg-mantle: #242128;
-  --bg-base: #2a272e;
-  --bg-surface0: #4a4553;
+  --bg-base: #2A272E;
+  --bg-surface0: #4A4553;
   --bg-surface1: #575268;
-  --bg-surface2: #6e6a86;
-  --text-main: #fdeadc;
-  --text-sub0: #d8d0c8;
-  --text-sub1: #9893AE;
-  --text-overlay0: #6e6a86;
-  --accents-peach: #ee99a0;
-  --accents-mint: #a6d1a1;
-  --accents-cream: #f9e2af;
-  --accents-peri: #9fbce8;
-  --accents-pink: #f5bde6;
-  --accents-lilac: #c7b0f0;
-  --accents-aqua: #a8e0d3;
+  --bg-surface2: #6E6A86;
+  --text-main: #F6EDE6;
+  --text-sub0: #D8D0C8;
+  --text-sub1: #AFA9B8;
+  --text-overlay0: #6E6A86;
+  --accents-peach: #EE99A0;
+  --accents-mint: #8FCF98;
+  --accents-cream: #F9E2AF;
+  --accents-peri: #9FBCE8;
+  --accents-pink: #F5BDE6;
+  --accents-lilac: #C7B0F0;
+  --accents-aqua: #99E1C9;
+  --ui-error: #E46A6A;
+  --ui-warning: #E5B76E;
+  --ui-info: #7FA6F7;
+  --ui-hint: #A6D1A1;
+  --ui-muted: #3B3640;
+  --ui-accentBright: #CFEFF0;
 }
 
 html[data-theme="sunbeam"] {
@@ -47,16 +59,22 @@ html[data-theme="sunbeam"] {
   --bg-surface0: #F2ECE4;
   --bg-surface1: #E8E1DA;
   --bg-surface2: #DFD8CF;
-  --text-main: #4C4843;
-  --text-sub0: #7C766F;
-  --text-sub1: #9C968E;
+  --text-main: #423F3A;
+  --text-sub0: #6D6863;
+  --text-sub1: #8E8982;
   --text-overlay0: #B0A9A3;
   --accents-peach: #E88E86;
-  --accents-mint: #81B580;
+  --accents-mint: #5FA872;
   --accents-cream: #E6B450;
   --accents-peri: #7E9CD6;
   --accents-pink: #E59BCF;
   --accents-lilac: #AB91E4;
-  --accents-aqua: #7ECBC4;
+  --accents-aqua: #5EC2B8;
+  --ui-error: #C94B4B;
+  --ui-warning: #C98939;
+  --ui-info: #5279C6;
+  --ui-hint: #81B580;
+  --ui-muted: #DDD7D1;
+  --ui-accentBright: #FFF3E1;
 }
 

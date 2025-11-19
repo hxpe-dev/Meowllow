@@ -1,11 +1,6 @@
 import fs from "fs-extra";
 import path from "path";
 
-/**
- * Generate full VS Code themes for all flavors in the palette.
- *
- * @param {object} palette - your Meowllow palette loaded from YAML
- */
 export async function generateVSCodeThemes(palette) {
   const outDir = path.join("vscode");
   await fs.ensureDir(outDir);
@@ -19,116 +14,221 @@ export async function generateVSCodeThemes(palette) {
   }
 }
 
-/**
- * Build one VS Code theme JSON structure for a single flavor.
- */
 function buildTheme(flavor, c) {
   const bg = c.bg;
   const text = c.text;
   const acc = c.accents;
+  const ui = c.ui || {};
 
-  return {
-    name: `Meowllow ${capitalize(flavor)}`,
-    type: isLight(bg.base) ? "light" : "dark",
+  const isLightTheme = isLight(bg.base);
+  const type = isLightTheme ? "light" : "dark";
 
-    colors: {
-      "editor.background": bg.base,
-      "editor.foreground": text.main,
-      "editor.selectionBackground": bg.surface2,
-      "editor.lineHighlightBackground": bg.surface1,
-      "editorCursor.foreground": acc.peri,
-      "editorLineNumber.activeForeground": acc.peri,
-      "editorLineNumber.foreground": text.sub1,
+  // helpers
+  const selection = isLightTheme
+    ? hexWithAlpha(acc.peri, 0.15)
+    : hexWithAlpha(acc.peri, 0.2);
+  const highlight = hexWithAlpha(acc.peri, 0.12);
 
-      "activityBar.background": bg.crust,
-      "sideBar.background": bg.mantle,
-      "sideBar.foreground": text.sub0,
-      "statusBar.background": bg.crust,
+  // common UI colors (workbench + editor)
+  const colors = {
+    "editor.background": bg.base,
+    "editor.foreground": text.main,
+    "editorCursor.foreground": acc.peri,
+    "editorLineNumber.foreground": text.sub1,
+    "editorLineNumber.activeForeground": acc.peri,
 
-      "tab.activeBackground": bg.base,
-      "tab.inactiveBackground": bg.mantle,
-      "tab.activeForeground": text.main,
-      "tab.inactiveForeground": text.sub1,
-      "tab.border": bg.mantle
+    "editor.selectionBackground": selection,
+    "editor.selectionHighlightBackground": highlight,
+    "editor.findMatchBackground": hexWithAlpha(acc.cream || ui.accentBright || acc.peach, 0.22),
+    "editor.findMatchHighlightBackground": hexWithAlpha(acc.accentBright || acc.peri, 0.16),
+    "editor.wordHighlightBackground": hexWithAlpha(acc.mint || ui.hint, 0.12),
+    "editor.wordHighlightStrongBackground": hexWithAlpha(acc.peach, 0.12),
+
+    "editorBracketMatch.background": hexWithAlpha(acc.peri, 0.12),
+    "editorBracketMatch.border": acc.peri,
+
+    "editorGutter.modifiedBackground": acc.mint,
+    "editorGutter.addedBackground": acc.mint,
+    "editorGutter.deletedBackground": ui.error || "#E06C75",
+
+    "activityBar.background": bg.crust,
+    "activityBar.foreground": text.sub0,
+    "activityBarBadge.background": acc.peri,
+    "activityBarBadge.foreground": bg.base,
+
+    "sideBar.background": bg.mantle,
+    "sideBar.foreground": text.sub0,
+
+    "statusBar.background": bg.crust,
+    "titleBar.activeBackground": bg.crust,
+    "titleBar.activeForeground": text.main,
+    "titleBar.inactiveBackground": bg.mantle,
+    "titleBar.inactiveForeground": text.sub1,
+
+    "tab.activeBackground": bg.base,
+    "tab.inactiveBackground": bg.mantle,
+    "tab.activeForeground": text.main,
+    "tab.inactiveForeground": text.sub1,
+    "tab.border": bg.mantle,
+
+    "button.background": hexWithAlpha(acc.peri, 0.14),
+    "button.foreground": text.main,
+
+    "badge.background": acc.peri,
+    "badge.foreground": bg.base,
+
+    "input.background": bg.surface0,
+    "input.foreground": text.main,
+
+    // diagnostics
+    "editorError.foreground": ui.error || "#F26868",
+    "editorWarning.foreground": ui.warning || "#E6B85A",
+    "editorInfo.foreground": ui.info || acc.peri,
+    "editorHint.foreground": ui.hint || acc.mint,
+  };
+
+  // token colors (textmate scopes)
+  const tokenColors = [
+    // comments
+    {
+      scope: ["comment", "punctuation.definition.comment", "comment.block.documentation"],
+      settings: { foreground: text.overlay0, fontStyle: "italic" }
     },
 
-    tokenColors: [
-      // comments
-      {
-        scope: ["comment", "punctuation.definition.comment"],
-        settings: { foreground: text.overlay0, fontStyle: "italic" }
-      },
+    // keywords & storage
+    {
+      scope: ["keyword", "storage.type", "storage.modifier"],
+      settings: { foreground: acc.peri, fontStyle: "italic" }
+    },
 
-      // strings
-      {
-        scope: ["string", "constant.character.escape"],
-        settings: { foreground: acc.peach }
-      },
+    // control keywords (if, for, return)
+    {
+      scope: ["keyword.control"],
+      settings: { foreground: acc.peri, fontStyle: "italic" }
+    },
 
-      // numbers
-      {
-        scope: ["constant.numeric"],
-        settings: { foreground: acc.pink }
-      },
+    // strings & template
+    {
+      scope: ["string", "constant.other.symbol", "string.quoted.template"],
+      settings: { foreground: acc.peach }
+    },
 
-      // keywords
-      {
-        scope: ["keyword", "storage.type"],
-        settings: { foreground: acc.peri }
-      },
+    // numbers & numeric constants
+    {
+      scope: ["constant.numeric", "constant.numeric.integer", "constant.numeric.float", "constant.character.escape"],
+      settings: { foreground: acc.pink }
+    },
 
-      // control keywords (if, for, return)
-      {
-        scope: ["keyword.control"],
-        settings: { foreground: acc.peri, fontStyle: "italic" }
-      },
+    // functions (declaration + calls)
+    {
+      scope: [
+        "entity.name.function",
+        "support.function",
+        "meta.function-call",
+        "meta.function-call.identifier",
+        "variable.function"
+      ],
+      settings: { foreground: acc.lilac, fontStyle: "italic" }
+    },
 
-      // functions
-      {
-        scope: [
-          "entity.name.function",
-          "support.function",
-          "meta.function-call.identifier"
-        ],
-        settings: { foreground: acc.lilac, fontStyle: "italic" }
-      },
+    // methods
+    {
+      scope: ["entity.name.method", "meta.method-call"],
+      settings: { foreground: acc.lilac }
+    },
 
-      // variables
-      {
-        scope: ["variable", "identifier"],
-        settings: { foreground: text.main }
-      },
+    // classes / types / interfaces
+    {
+      scope: ["entity.name.type", "support.class", "support.type", "storage.type.class", "entity.name.namespace"],
+      settings: { foreground: acc.mint }
+    },
 
-      // constants
-      {
-        scope: ["constant", "constant.other"],
-        settings: { foreground: acc.cream }
-      },
+    // constants / enums
+    {
+      scope: ["constant", "constant.other", "variable.other.constant", "support.constant"],
+      settings: { foreground: acc.cream }
+    },
 
-      // classes / types
-      {
-        scope: ["entity.name.type", "support.class", "support.type"],
-        settings: { foreground: acc.mint }
-      },
+    // variables, identifiers, parameters
+    {
+      scope: ["variable", "identifier", "variable.parameter", "variable.other.property"],
+      settings: { foreground: text.main }
+    },
 
-      // operators + punctuation
-      {
-        scope: ["keyword.operator", "punctuation"],
-        settings: { foreground: text.sub1 }
-      },
+    // properties / object keys / json keys
+    {
+      scope: ["meta.object-literal.key", "support.type.property-name", "entity.name.tag.xml", "punctuation.definition.tag.xml", "meta.structure.dictionary.json string.quoted.double.json"],
+      settings: { foreground: acc.aqua }
+    },
 
-      // attributes (HTML, XML)
-      {
-        scope: ["entity.other.attribute-name"],
-        settings: { foreground: acc.aqua }
-      }
-    ]
+    // attributes (HTML, XML)
+    {
+      scope: ["entity.other.attribute-name", "meta.attribute"],
+      settings: { foreground: acc.aqua }
+    },
+
+    // CSS properties & selectors
+    {
+      scope: ["support.type.property-name.css", "support.constant.property-value.css", "entity.name.tag.css"],
+      settings: { foreground: acc.peri }
+    },
+
+    // punctuation / operators
+    {
+      scope: ["keyword.operator", "punctuation", "punctuation.definition.tag"],
+      settings: { foreground: text.sub1 }
+    },
+
+    // regex
+    {
+      scope: ["string.regexp", "constant.other.regex"],
+      settings: { foreground: acc.aqua }
+    },
+
+    // markup (bold/italic)
+    {
+      scope: ["markup.bold", "markup.italic"],
+      settings: { fontStyle: "italic", foreground: acc.lilac }
+    }
+  ];
+
+  // semantic token colors so LSP + semantic highlighting get consistent colors
+  const semanticTokenColors = {
+    "variable": text.main,
+    "variable.readonly": hexOrFallback(acc.cream, text.main),
+    "parameter": acc.aqua,
+    "property": acc.aqua,
+    "function": acc.lilac,
+    "method": acc.lilac,
+    "enumMember": acc.cream,
+    "class": acc.mint,
+    "type": acc.mint,
+    "interface": acc.mint,
+    "namespace": acc.peri,
+    "keyword": acc.peri,
+    "comment": { "foreground": text.overlay0, "fontStyle": "italic" },
+    "string": acc.peach,
+    "number": acc.pink,
+    "regexp": acc.aqua,
+    "operator": text.sub1
+  };
+
+  // final theme object
+  return {
+    name: `Meowllow ${capitalize(flavor)}`,
+    type,
+    colors,
+    semanticTokenColors,
+    tokenColors,
+    // prompt VS Code to prefer semantic tokens when available
+    semanticHighlighting: true,
+    // small metadata
+    publisher: "meowllow",
+    // description from user (keeps your theme description)
+    description: "A soft, mellow, and soothing color theme inspired by creamy pastels and cozy coding sessions."
   };
 }
 
-/**
- * Light/dark detection based on YIQ brightness.
- */
 function isLight(hex) {
   const { r, g, b } = hexToRgb(hex);
   const yiq = (r * 299 + g * 587 + b * 114) / 1000;
@@ -144,6 +244,19 @@ function hexToRgb(hex) {
         b: parseInt(result[3], 16),
       }
     : { r: 0, g: 0, b: 0 };
+}
+
+function hexWithAlpha(hex, alpha) {
+  if (!hex || typeof hex !== "string") return hex;
+  const h = hex.replace("#", "");
+  if (h.length !== 6) return `#${h}`;
+  const a = Math.round(alpha * 255);
+  const aHex = a.toString(16).padStart(2, "0").toUpperCase();
+  return `#${h.toUpperCase()}${aHex}`;
+}
+
+function hexOrFallback(primary, fallback) {
+  return primary || fallback;
 }
 
 function capitalize(s) {

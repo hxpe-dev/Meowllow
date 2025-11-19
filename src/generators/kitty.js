@@ -36,8 +36,8 @@ background ${bg.base}
 cursor ${acc.pink}
 cursor_text_color ${bg.base}
 
-selection_foreground ${text.main}
-selection_background ${bg.surface0}
+selection_foreground ${bg.base}
+selection_background ${acc.peri}
 
 url_color ${acc.peri}
 
