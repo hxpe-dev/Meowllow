@@ -5,6 +5,7 @@ import { generateCSS } from "./generators/css.js";
 import { generateKitty } from "./generators/kitty.js";
 import { generateFirefox } from "./generators/firefox.js";
 import { generateVSCodeThemes } from "./generators/vscode.js";
+import { generateNvim } from "./generators/nvim.js";
 
 async function loadPalette() {
   const file = await fs.readFile("src/palette/meowllow.yml", "utf8");
@@ -25,6 +26,9 @@ async function main() {
 
   console.log("→ Generating VSCode themes...");
   await generateVSCodeThemes(palette);
+
+  console.log("→ Generating Neovim themes...");
+  await generateNvim(palette);
 
   console.log("✓ All themes generated!");
 }
