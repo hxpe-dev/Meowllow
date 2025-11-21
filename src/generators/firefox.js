@@ -2,7 +2,7 @@ import fs from "fs-extra";
 import JsonUrl from "json-url";
 
 const jsonCodec = JsonUrl("lzma");
-const accents = ["peach","mint","cream","peri","pink","lilac","aqua"];
+const accents = ["peach","mint","cream","peri","pink","lilac","aqua","ember","honey","skybell","leaflight","ash","glimmer"];
 const capitalize = (s) => typeof s === "string" ? s.charAt(0).toUpperCase() + s.slice(1) : "";
 const hexToRgb = (hex) => {
   const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
