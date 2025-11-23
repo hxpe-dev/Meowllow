@@ -6,6 +6,7 @@ import { generateKitty } from "./generators/kitty.js";
 import { generateFirefox } from "./generators/firefox.js";
 import { generateVSCodeThemes } from "./generators/vscode.js";
 import { generateNvim } from "./generators/nvim.js";
+import { generateRofiThemes } from "./generators/rofi.js";
 
 async function loadPalette() {
   const file = await fs.readFile("src/palette/meowllow.yml", "utf8");
@@ -29,6 +30,9 @@ async function main() {
 
   console.log("→ Generating Neovim themes...");
   await generateNvim(palette);
+
+  console.log("→ Generating rofi themes...");
+  await generateRofiThemes(palette);
 
   console.log("✓ All themes generated!");
 }

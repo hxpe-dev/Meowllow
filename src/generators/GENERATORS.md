@@ -97,3 +97,18 @@ NOT DONE YET, SEE CODE FOR MORE INFO
   await generateNvim(palette);
   ```
 
+## 6. Rofi Themes Generator (`rofi.js`)
+
+**Function:** `generateRofiThemes(palette)`
+
+- **Input:** `palette` object.
+- **Output:** `../rofi/meowllow-base.rasi`, `../rofi/themes/meowllow-purr.rasi`, `../rofi/themes/meowllow-slumber.rasi`, `../rofi/themes/meowllow-sunbeam.rasi`
+- **Description:**
+Generates the base rasi file and the rasi theme flavors.
+- **Usage:**  
+  ```js
+  import { generateRofiThemes } from "./generators/rofi.js";
+  await generateRofiThemes(palette);
+  ```
+
+
