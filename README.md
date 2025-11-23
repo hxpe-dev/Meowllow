@@ -28,6 +28,7 @@ Here is a list of them:
 - [Firefox](https://github.com/Meowllow/Firefox)
 - [VSCode](https://github.com/Meowllow/vscode)
 - [Neovim](https://github.com/Meowllow/nvim)
+- [Rofi](https://github.com/Meowllow/rofi)
 
 ---
 
